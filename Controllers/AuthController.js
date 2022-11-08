@@ -22,8 +22,36 @@ function register(req, res){
 }
 
 function refresh(req, res){
+    try{
 
+    }catch(e){res.status(500).json(e);}
 }
+
+function GetAll(req, res){
+    try{
+
+    }catch(e){res.status(500).json(e);}
+}
+
+function GetOne(req, res){
+    try{
+
+    }catch(e){res.status(500).json(e);}
+}
+
+function Update(req, res){
+    try{
+
+    }catch(e){res.status(500).json(e);}
+}
+
+
+function Delete(req, res){
+    try{
+
+    }catch(e){res.status(500).json(e);}
+}
+
 module.exports = {
     login,refresh,register,
 };
