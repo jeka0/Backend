@@ -9,15 +9,4 @@ services:
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=root
-    image: postgres:15.0-alpine3.16
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
-
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_PASSWORD=root
-      - PGADMIN_DEFAULT_EMAIL=latosh02@mail.ru
-    ports:
-      - "5050:80"    
+    image: postgres:15.0-alpine3.16  
