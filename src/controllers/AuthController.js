@@ -1,32 +1,43 @@
-const jwt = require('jsonwebtoken')
-const userAccess = require("../repositories/userAccess.js")
-const accessTokenSecret = process.env.JWT_ACCESS_KEY;
-const refreshTokenSecret = process.env.JWT_REFRESH_KEY;
+const authService = require("../services/authService")
 
 async function login(req, res){
-    const { email, password } = req.body;
-    if(!email || !password)
-    res.status(400).send("Email and password required");
-    // получение пользователя
-    let user = await userAccess.getOneUser({ email, password });
-    const accessToken = jwt.sign({},accessTokenSecret)
-    const refreshToken = jwt.sign({},refreshTokenSecret)
-    res.send({ accessToken, refreshToken, user })
+    try{
+        const { email, password } = req.body;
+
+        if(!email || !password)
+        throw new Error("Email and password required");
+
+        res.send(await authService.login({ email, password }));
+    }catch(e) {res.status(400).send(e.message);} 
 }
 
-function register(req, res){
-    const { email, password, firstName, lastName } = req.body;
-    if(!email || !password)
-    res.status(400).send("Email and password required");
-    userAccess.createUser({ email, password, firstName, lastName })
-    res.send({ email, password, firstName, lastName })
+async function register(req, res){
+    try{
+        const { email, password, firstName, lastName } = req.body;
+
+        if(!email || !password)
+        throw new Error("Email and password required");
+
+        await authService.register({ email, password, firstName, lastName });
+
+        res.send("OK");
+    }catch(e) {res.status(400).send(e.message);} 
 }
 
-function refresh(req, res){
+async function refresh(req, res){
+    try{
+        const { refreshToken } = req.body;
 
+        if(!refreshToken)
+        throw new Error("RefreshToken required");
+
+        res.send(await authService.refresh({ refreshToken }));
+    }catch(e) {res.status(400).send(e.message);} 
 }
 
 
 module.exports = {
-    login,refresh,register,
+    login,
+    refresh,
+    register
 };

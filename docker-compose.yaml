@@ -10,5 +10,3 @@ services:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=root
     image: postgres:15.0-alpine3.16 
-    volumes:
-      - ./docker:/var/lib/postgresql/data/

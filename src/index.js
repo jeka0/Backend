@@ -3,9 +3,11 @@ const router = require("./routes/router.js")
 const bodyParser = require('body-parser')
 const dbAccess = require("./repositories/dbAccess.js")
 require('dotenv').config()
+
 const AppDataSource = dbAccess.AppDataSource;
 const app = express()
 const PORT = 3000;
+
 app.use(bodyParser.json())
 app.use('/api',router)
 

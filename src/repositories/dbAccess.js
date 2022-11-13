@@ -6,7 +6,7 @@ const AppDataSource = new typeorm.DataSource({
     username : "admin",
     password : "root",
     synchronize: true,
-    entities: [require("../entity/User.js")],
+    entities: [require("../entity/user.js")],
 
 })
 

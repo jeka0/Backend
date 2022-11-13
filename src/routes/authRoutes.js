@@ -1,8 +1,9 @@
 const router = require('express').Router();
+const auth = require('../middlewares/checkAuth.js')
 
-const {login,refresh,register} = require('../controllers/AuthController.js')
-router.post('/login',(req,res)=>{login(req,res);});
-router.post('/register',(req,res)=>{register(req,res);});
-router.post('/refresh',(req,res)=>{refresh(req,res);});
+const {login,refresh,register} = require('../controllers/authController.js')
+router.post('/login', login);
+router.post('/register', register);
+router.post('/refresh', refresh);
 
 module.exports = router;
