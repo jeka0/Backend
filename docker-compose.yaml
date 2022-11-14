@@ -5,8 +5,8 @@ services:
   db_auth:
     container_name: db_auth
     ports:
-      - "5438:5432"
+      - "${BD_PORT}:5432"
     environment:
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=${BD_USERNAME}
+      - POSTGRES_PASSWORD=${BD_PASSWORD}
     image: postgres:15.0-alpine3.16 

@@ -26,7 +26,10 @@ async function getUser(req, res){
         if(!id) 
         res.status(400).send("ID required");
 
-        res.send(await userService.getOneUserByID(id));
+        let user  = await userService.getOneUserByID(id)
+        const { password, ...userData } = user;
+
+        res.send(userData);
     }catch(e){res.status(404).send('User not found');}
 }
 

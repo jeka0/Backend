@@ -6,7 +6,7 @@ require('dotenv').config()
 
 const AppDataSource = dbAccess.AppDataSource;
 const app = express()
-const PORT = 3000;
+const PORT = process.env.SERVER_PORT;
 
 app.use(bodyParser.json())
 app.use('/api',router)

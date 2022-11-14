@@ -20,13 +20,15 @@ async function createUser(user){
  async function getOneUserByEmail(email){
     let user = await userAccess.getOneUserByEmail(email);
 
-    if(!user)
-    throw new Error("User is not found");
-
     return user;
  }
  
  async function deleteCurrentUser(id){
+   let user = await userAccess.getOneUserByID(id);
+    
+    if(!user)
+    throw new Error("This user does not exist");
+
     await userAccess.deleteUser(id);
  }
  

@@ -1,11 +1,11 @@
 const jwt = require("../helpers/jwt");
-const userAccess = require("../repositories/userAccess");
+const userService = require("./userService");
 
 const accessTokenSecret = process.env.JWT_ACCESS_KEY;
 const refreshTokenSecret = process.env.JWT_REFRESH_KEY;
 
 async function login(data){
-    let user = await userAccess.getOneUserByEmail(data.email);
+    let user = await userService.getOneUserByEmail(data.email);
 
     if(!user || user.password !== data.password)
     throw new Error("Invalid email or password");
@@ -17,7 +17,7 @@ async function login(data){
 }
 
 async function register(data){
-    let user = await userAccess.getOneUserByEmail(data.email);
+    let user = await userService.getOneUserByEmail(data.email);
     
     if(user)
     throw new Error("This email is already in use by another account");
@@ -25,7 +25,7 @@ async function register(data){
     data.firstName = data.firstName ?? "";
     data.lastName = data.lastName ?? "";
     
-    await userAccess.createUser(data);
+    await userService.createUser(data);
 }
 
 async function refresh(data)

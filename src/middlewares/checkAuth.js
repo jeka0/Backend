@@ -11,7 +11,7 @@ const checkAuth = (req, res, next) => {
 
         next();
     } catch (err) {
-        res.status(401).send(err);
+        res.status(401).send("AccessToken is not valid");
     }
 }
 
