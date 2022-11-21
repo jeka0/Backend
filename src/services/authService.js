@@ -36,7 +36,9 @@ async function refresh(data)
         throw new Error("RefreshToken is not valid");
         
         const accessToken = jwt.createToken({ id: result.id }, accessTokenSecret);
-        return {accessToken};
+        const refreshToken = jwt.createToken({ id: result.id }, refreshTokenSecret);
+
+        return { accessToken, refreshToken };
     }catch{ throw new Error("RefreshToken is not valid"); }
 }
 

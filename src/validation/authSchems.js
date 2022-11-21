@@ -1,4 +1,4 @@
-const {Joi,Segments} = require('celebrate');
+const { Joi, Segments } = require('celebrate');
 
 const login = {
     [Segments.BODY]: Joi.object().keys({
@@ -9,7 +9,6 @@ const login = {
 
 const refresh = {
     [Segments.BODY]: Joi.object().keys({
-        accessToken: Joi.string().email().required(),
         refreshToken: Joi.string().required()
     })
 }

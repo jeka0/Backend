@@ -5,8 +5,8 @@ const accessTokenSecret = process.env.JWT_ACCESS_KEY;
 
 const checkAuth = (req, res, next) => {
     try {
-        const { accessToken } = req.body;
-        const decoded = jwt.verifyToken(accessToken, accessTokenSecret);
+        const { accesstoken } = req.headers;
+        const decoded = jwt.verifyToken(accesstoken, accessTokenSecret);
         req.body.userId = decoded.id;
 
         next();

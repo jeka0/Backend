@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const auth = require('../middlewares/checkAuth.js')
 const {celebrate} = require('celebrate');
 const authSchem = require("../validation/authSchems")
 
