@@ -15,6 +15,4 @@ const checkAuth = (req, res, next) => {
     }
 }
 
-module.exports = { 
-    checkAuth
-}
+module.exports = checkAuth;

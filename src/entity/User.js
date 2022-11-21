@@ -1,6 +1,6 @@
 const EntitySchema = require('typeorm').EntitySchema
 module.exports = new EntitySchema({
-    name: "User", // Will use table name `post` as default behaviour.
+    name: "User", // Will use table name `User` as default behaviour.
     columns: {
         id: {
             primary: true,
@@ -9,9 +9,11 @@ module.exports = new EntitySchema({
         },
         firstName: {
             type: "text",
+            require:false
         },
         lastName: {
             type: "text",
+            require:false
         },
         email: {
             type: "text",
