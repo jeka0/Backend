@@ -7,8 +7,10 @@ const refreshTokenSecret = process.env.JWT_REFRESH_KEY;
 async function login(data){
     let user = await userService.getOneUserByEmail(data.email);
 
-    if(!user || user.password !== data.password)
-    throw new Error("Invalid email or password");
+    if(!user || user.password !== data.password){   
+        console.log(`"${user.password}" "${data.password}" "${user.password === data.password}"`);
+        throw new Error("Invalid email or password");
+    }
 
     const accessToken = jwt.createToken({ id: user.id }, accessTokenSecret);
     const refreshToken = jwt.createToken({ id: user.id }, refreshTokenSecret);
@@ -21,9 +23,6 @@ async function register(data){
     
     if(user)
     throw new Error("This email is already in use by another account");
-
-    data.firstName = data.firstName ?? "";
-    data.lastName = data.lastName ?? "";
     
     await userService.createUser(data);
 }

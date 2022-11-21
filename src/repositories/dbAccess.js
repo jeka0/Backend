@@ -7,8 +7,13 @@ const AppDataSource = new typeorm.DataSource({
     port : process.env.BD_PORT,
     username : process.env.BD_USERNAME,
     password : process.env.BD_PASSWORD,
-    synchronize: true,
+    synchronize: false,
     entities: [require("../entity/user.js")],
+    migrations: ["src/migration/**/*.js"],
+    cli: {
+        entitiesDir: "src/entity",
+        migrationsDir: "src/migration"
+     }
 
 })
 

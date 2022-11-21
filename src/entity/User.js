@@ -9,11 +9,11 @@ module.exports = new EntitySchema({
         },
         firstName: {
             type: "text",
-            require:false
+            nullable: true
         },
         lastName: {
             type: "text",
-            require:false
+            nullable: true
         },
         email: {
             type: "text",
