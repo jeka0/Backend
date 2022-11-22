@@ -6,7 +6,7 @@ const {getCurrentUser, getUser, updateUser, deleteUser} = require('../controller
 
 router.get('/:id', celebrate(userSchem.userId), getUser);
 router.get('/',  getCurrentUser);
-router.put('/',  updateUser);
+router.put('/', updateUser);
 router.delete('/',  deleteUser);
 
 

@@ -1,11 +1,10 @@
 const express = require('express')
 const router = require("./routes/router.js")
 const bodyParser = require('body-parser')
-const dbAccess = require("./repositories/dbAccess.js")
+const { AppDataSource } = require("./repositories/dbAccess.js")
 require('dotenv').config()
 const {errors} = require('celebrate');
 
-const AppDataSource = dbAccess.AppDataSource;
 const app = express()
 const PORT = process.env.SERVER_PORT;
 

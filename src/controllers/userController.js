@@ -3,17 +3,22 @@ const userService = require("../services/userService");
 require('dotenv').config()
 
 async function deleteUser(req, res){
-    try{
-        const { userId } = req.body;
-        await userService.deleteCurrentUser(userId);
+    const userId = req.userId;
 
-        res.send("OK");
-    }catch(e){res.status(401).send('Access denied');}
+    userService.deleteCurrentUser(userId)
+    .then(()=>res.send("OK"))
+    .catch((err)=>res.status(401).send('Access denied'));
 }
 
 async function updateUser(req, res){
     try{
-        const { email, password, firstName, lastName, userId } = req.body;
+        const { email, password, firstName, lastName } = req.body;
+        const userId = req.userId;
+
+        if(!email && !password && !firstName && !lastName){
+            throw new Error("No data");
+        }
+
         await userService.updateCurrentUser(userId, {email, password, firstName, lastName});
 
         res.send("OK");
@@ -23,10 +28,8 @@ async function updateUser(req, res){
 async function getUser(req, res){
     try{
         const { id } = req.params;
-        if(!id) 
-        res.status(400).send("ID required");
 
-        let user  = await userService.getOneUserByID(id)
+        let user  = await userService.getUserByID(id)
         const { password, ...userData } = user;
 
         res.send(userData);
@@ -35,8 +38,8 @@ async function getUser(req, res){
 
 async function getCurrentUser(req, res){
     try{
-        const { userId } = req.body;
-        let user  = await userService.getOneUserByID(userId);
+        const userId = req.userId;
+        let user  = await userService.getUserByID(userId);
 
         const { password, ...userData } = user;
 

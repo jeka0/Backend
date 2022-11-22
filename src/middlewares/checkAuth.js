@@ -7,7 +7,7 @@ const checkAuth = (req, res, next) => {
     try {
         const { accesstoken } = req.headers;
         const decoded = jwt.verifyToken(accesstoken, accessTokenSecret);
-        req.body.userId = decoded.id;
+        req.userId = decoded.id;
 
         next();
     } catch (err) {

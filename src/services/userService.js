@@ -1,46 +1,56 @@
 const userAccess = require("../repositories/userAccess");
+const { getHesh } = require("../helpers/encrypt"); 
 
 async function createUser(user){
-    await userAccess.createUser(user);
+    user.password = await getHesh(user.password);
+    userAccess.createUser(user);
  }
  
- async function getAll(){
-    return await userAccess.getAll();
+ async function getAllUsers(){
+    return await userAccess.getAllUsers();
  }
  
- async function getOneUserByID(id){
-    let user = await userAccess.getOneUserByID(id);
+ async function getUserByID(id){
+    const user = await userAccess.getUserByID(id);
     
-    if(!user)
-    throw new Error("User is not found");
+    if(!user){
+      throw new Error("User is not found");
+    }
 
     return user;
  }
  
- async function getOneUserByEmail(email){
-    let user = await userAccess.getOneUserByEmail(email);
-
-    return user;
+ async function getUserByEmail(email){
+    return await userAccess.getUserByEmail(email);
  }
  
  async function deleteCurrentUser(id){
-   let user = await userAccess.getOneUserByID(id);
+   const user = await userAccess.getUserByID(id);
     
-    if(!user)
-    throw new Error("This user does not exist");
+    if(!user){
+      throw new Error("User is not found");
+    }
 
-    await userAccess.deleteUser(id);
+    userAccess.deleteUser(id);
  }
  
  async function updateCurrentUser(id, data){
-    await userAccess.updateUser(id, data);
+   const user = await userAccess.getUserByID(id);
+    
+   if(!user){
+     throw new Error("User is not found");
+   }
+
+   if(data.password)data.password = await getHesh(data.password);
+
+   userAccess.updateUser(id, data);
  }
  
  module.exports = {
      createUser,
-     getOneUserByID,
-     getOneUserByEmail,
-     getAll,
+     getAllUsers,
+     getUserByID,
+     getUserByEmail,
      deleteCurrentUser,
      updateCurrentUser
  };

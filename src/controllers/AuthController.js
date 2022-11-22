@@ -12,7 +12,7 @@ async function register(req, res){
     try{
         const { email, password, firstName, lastName } = req.body;
 
-        await authService.register({ email, password, firstName, lastName });
+        authService.register({ email, password, firstName, lastName });
 
         res.send("OK");
     }catch(e) {res.status(400).send(e.message);} 
