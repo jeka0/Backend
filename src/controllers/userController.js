@@ -7,7 +7,7 @@ async function deleteUser(req, res){
 
     userService.deleteCurrentUser(userId)
     .then(()=>res.send("OK"))
-    .catch((err)=>res.status(401).send('Access denied'));
+    .catch((err)=>res.status(401).send(err.message));
 }
 
 async function updateUser(req, res){
@@ -22,29 +22,28 @@ async function updateUser(req, res){
         await userService.updateCurrentUser(userId, {email, password, firstName, lastName});
 
         res.send("OK");
-    }catch(e){res.status(401).send('Access denied');}
+    }catch(e){res.status(401).send(err.message);}
 }
 
 async function getUser(req, res){
-    try{
-        const { id } = req.params;
+    const { id } = req.params;
 
-        let user  = await userService.getUserByID(id)
+    userService.getUserByID(id)
+    .then((user)=>{
         const { password, ...userData } = user;
 
         res.send(userData);
-    }catch(e){res.status(404).send('User not found');}
+    }).catch((err)=>res.status(401).send(err.message));
 }
 
 async function getCurrentUser(req, res){
-    try{
-        const userId = req.userId;
-        let user  = await userService.getUserByID(userId);
-
+    const userId = req.userId;
+    userService.getUserByID(userId)
+    .then((user)=>{
         const { password, ...userData } = user;
 
         res.send(userData);
-    }catch(e){res.status(401).send('Access denied');}
+    }).catch((err)=>res.status(401).send(err.message));
 }
 
 module.exports = {
