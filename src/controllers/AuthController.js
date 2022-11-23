@@ -1,29 +1,27 @@
 const authService = require("../services/authService")
 
 async function login(req, res){
-    try{
-        const { email, password } = req.body;
+    const { email, password } = req.body;
 
-        res.send(await authService.login({ email, password }));
-    }catch(e) {res.status(400).send(e.message);} 
+    authService.login({ email, password })
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
 }
 
 async function register(req, res){
-    try{
-        const { email, password, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName } = req.body;
 
-        authService.register({ email, password, firstName, lastName });
-
-        res.send("OK");
-    }catch(e) {res.status(400).send(e.message);} 
+    authService.register({ email, password, firstName, lastName })
+    .then(()=>res.send("OK"))
+    .catch((err)=>res.status(400).send(err.message));
 }
 
 async function refresh(req, res){
-    try{
-        const { refreshToken } = req.body;
+    const { refreshToken } = req.body;
 
-        res.send(await authService.refresh({ refreshToken }));
-    }catch(e) {res.status(400).send(e.message);} 
+    authService.refresh({ refreshToken })
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
 }
 
 

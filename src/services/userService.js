@@ -31,7 +31,7 @@ async function createUser(user){
       throw new Error("User is not found");
     }
 
-    userAccess.deleteUser(id);
+     return await userAccess.deleteUser(id);
  }
  
  async function updateCurrentUser(id, data){
@@ -43,7 +43,7 @@ async function createUser(user){
 
    if(data.password)data.password = await getHesh(data.password);
 
-   userAccess.updateUser(id, data);
+   return await userAccess.updateUser(id, data);
  }
  
  module.exports = {

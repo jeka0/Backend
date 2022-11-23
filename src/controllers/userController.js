@@ -7,7 +7,7 @@ async function deleteUser(req, res){
 
     userService.deleteCurrentUser(userId)
     .then(()=>res.send("OK"))
-    .catch((err)=>res.status(401).send(err.message));
+    .catch((err)=>res.status(400).send(err.message));
 }
 
 async function updateUser(req, res){
@@ -22,7 +22,7 @@ async function updateUser(req, res){
         await userService.updateCurrentUser(userId, {email, password, firstName, lastName});
 
         res.send("OK");
-    }catch(e){res.status(401).send(err.message);}
+    }catch(e){res.status(400).send(err.message);}
 }
 
 async function getUser(req, res){
@@ -33,7 +33,7 @@ async function getUser(req, res){
         const { password, ...userData } = user;
 
         res.send(userData);
-    }).catch((err)=>res.status(401).send(err.message));
+    }).catch((err)=>res.status(400).send(err.message));
 }
 
 async function getCurrentUser(req, res){
@@ -43,7 +43,7 @@ async function getCurrentUser(req, res){
         const { password, ...userData } = user;
 
         res.send(userData);
-    }).catch((err)=>res.status(401).send(err.message));
+    }).catch((err)=>res.status(400).send(err.message));
 }
 
 module.exports = {

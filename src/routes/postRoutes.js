@@ -8,8 +8,8 @@ router.post('/', celebrate(postSchems.create), createPost);
 router.get('/all', getAllPosts);
 router.get('/:id', celebrate(postSchems.id), getPost);
 router.get('/', getCurrentUserPosts);
-router.get('/user/:id', celebrate(postSchems.id), celebrate(postSchems.update), getUserPosts);
-router.put('/:id', celebrate(postSchems.id), updatePost);
+router.get('/user/:id', celebrate(postSchems.id), getUserPosts);
+router.put('/:id', celebrate(postSchems.id), celebrate(postSchems.update), updatePost);
 router.delete('/:id',  celebrate(postSchems.id), deletePost);
 
 module.exports = router;
