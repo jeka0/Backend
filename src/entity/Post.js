@@ -11,11 +11,16 @@ module.exports = new EntitySchema({
             type: "text",
             nullable: true
         },
-        userId: {
-            type: "int"
-        },
         datetime: {
             type: "date"
+        },
+        relations: {
+            user: {
+                target: "User",
+                type: "many-to-one",
+                joinTable: true,
+                cascade: true,
+            },
         },
     },
 })

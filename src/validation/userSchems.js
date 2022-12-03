@@ -12,4 +12,13 @@ const AccessTokenExists = {
     }).unknown()
 }
 
-module.exports = { userId, AccessTokenExists }
+const update = {
+    [Segments.BODY]: Joi.object().keys({
+        email: Joi.string().email(),
+        password: Joi.string(),
+        firstName: Joi.string(),
+        lastName: Joi.string(),
+    }).required().min(1)
+}
+
+module.exports = { userId, AccessTokenExists, update }

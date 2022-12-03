@@ -14,8 +14,8 @@ const create = {
 
 const update = {
     [Segments.BODY]: Joi.object().keys({
-        message: Joi.string().required()
-    })
+        message: Joi.string()
+    }).required().min(1)
 }
 
 module.exports = { 

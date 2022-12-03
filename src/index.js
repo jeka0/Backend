@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use('/api',router);
 app.use(errors());
 
+
 AppDataSource.initialize().then(()=>{
     console.log("Database connected successfully");
     app.listen(PORT,()=>console.log(`The server is running on a port ${PORT}...`));
