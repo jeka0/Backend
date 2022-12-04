@@ -6,23 +6,50 @@ async function createPost(post){
 }
 
 async function getAllPosts(){
-    return await postRep.find()
+    return await postRep.find({
+         relations:['user'] 
+    });
 }
 
 async function getPost(id){
-    return await postRep.findOneBy({ id })
+    return await postRep.findOne({
+        where:{
+            id 
+        }, 
+        relations:['user'] 
+    });
 }
 
 async function getUserPosts(userId){
-    return await postRep.findBy({userId});
+    return await postRep.find({
+        where:{
+            user:{
+                id:userId
+            }
+        },
+        relations:['user']
+    });
 }
 
 async function deletePost(id){
-    return await postRep.delete({ id });
+    return await postRep.delete({
+        id
+    });
 }
 
 async function updatePost(id, data){
-    return await postRep.update({ id }, data)
+    return await postRep.update({
+        id
+    }, data)
+}
+
+async function getRange(skip, take){
+    const [result, total] = await postRep.findAndCount({ skip, take });
+
+    return {
+        data: result,
+        total
+    }
 }
 
 module.exports = {
@@ -31,5 +58,6 @@ module.exports = {
     getAllPosts, 
     getUserPosts, 
     updatePost, 
-    deletePost
+    deletePost,
+    getRange
 };

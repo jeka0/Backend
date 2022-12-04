@@ -14,13 +14,17 @@ module.exports = new EntitySchema({
         datetime: {
             type: "date"
         },
-        relations: {
-            user: {
-                target: "User",
-                type: "many-to-one",
-                joinTable: true,
-                cascade: true,
-            },
+        image: {
+            type: "text",
+            nullable: true
+        }
+    },
+    relations: {
+        user: {
+            target: "User",
+            type: "many-to-one",
+            joinTable: true,
+            cascade: true,
         },
     },
 })

@@ -1,7 +1,9 @@
 const postAccess = require("../repositories/postAccess");
-
-async function createPost(data){
+const { getUserByID } = require("./userService");
+const { deleteFile } = require("../helpers/fs");
+async function createPost(userId, data){
     data.datetime = new Date();
+    data.user = await getUserByID(userId);
 
     const post = await postAccess.createPost(data)
 
@@ -19,25 +21,36 @@ async function getPost(id){
         throw new Error("Post not found");
     }
 
+    delete post.user.password;
+
     return post;
 }
 
 async function getAllPosts()
 {
-    return await postAccess.getAllPosts();
+    const posts = await postAccess.getAllPosts()
+
+    posts.forEach((post)=>delete post.user.password);
+
+    return posts;
 }
 
 async function getUserPosts(id){
-    return await postAccess.getUserPosts(id);
+    const posts = await postAccess.getUserPosts(id)
+
+    posts.forEach((post)=>delete post.user.password);
+
+    return posts;
 }
 
 async function updatePost(id, userId, data){
     const post = await postAccess.getPost(id);
 
-    if(post.userId !== userId){
+    if(post.user.id !== userId){
         throw new Error("Access denied");
     }
 
+    if(data.image) deleteFile(post.image);
     const updatedPost = await postAccess.updatePost(id, data);
 
     if(!updatedPost){
@@ -50,10 +63,11 @@ async function updatePost(id, userId, data){
 async function deletePost(id, userId){
     const post = await postAccess.getPost(id);
 
-    if(post.userId !== userId){
+    if(post.user.id !== userId){
         throw new Error("Access denied");
     }
 
+    deleteFile(post.image);
     const deletedPost = await postAccess.deletePost(id);
 
     if(!deletedPost){
@@ -63,11 +77,19 @@ async function deletePost(id, userId){
     return deletedPost;
 }
 
+async function pagination(page, limit){
+    const skip= (page-1) * limit;
+    const result = await postAccess.getRange(skip, limit);
+
+    return result;
+}
+
 module.exports = {
     createPost, 
     getPost, 
     getAllPosts, 
     getUserPosts, 
     updatePost, 
-    deletePost
+    deletePost,
+    pagination
 };

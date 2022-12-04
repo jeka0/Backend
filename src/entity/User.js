@@ -22,5 +22,9 @@ module.exports = new EntitySchema({
         password: {
             type: "text",
         },
+        image:{
+            type: "text",
+            nullable: true
+        }
     },
 })

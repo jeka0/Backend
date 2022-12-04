@@ -11,10 +11,10 @@ async function deleteUser(req, res){
 }
 
 async function updateUser(req, res){
-    const { email, password, firstName, lastName } = req.body;
+    const { email, password, firstName, lastName, image } = req.body;
     const userId = req.userId;
 
-    userService.updateCurrentUser(userId, {email, password, firstName, lastName})
+    userService.updateCurrentUser(userId, {email, password, firstName, lastName, image})
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }

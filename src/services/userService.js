@@ -1,5 +1,6 @@
 const userAccess = require("../repositories/userAccess");
 const { getHesh } = require("../helpers/encrypt"); 
+const { deleteFile } = require("../helpers/fs");
 
 async function createUser(user){
     user.password = await getHesh(user.password);
@@ -31,7 +32,9 @@ async function createUser(user){
       throw new Error("User is not found");
     }
 
-     return await userAccess.deleteUser(id);
+    deleteFile(user.image);
+
+    return await userAccess.deleteUser(id);
  }
  
  async function updateCurrentUser(id, data){
@@ -41,6 +44,7 @@ async function createUser(user){
      throw new Error("User is not found");
    }
 
+   if(data.image)deleteFile(user.image);
    if(data.password)data.password = await getHesh(data.password);
 
    return await userAccess.updateUser(id, data);

@@ -12,7 +12,7 @@ const AppDataSource = new typeorm.DataSource({
         require("../entity/User.js"),
         require("../entity/Post.js")
     ],
-    migrations: ["src/migration/**/*.js"],
+    migrations: ["migration/**/*.js"],
     cli: {
         entitiesDir: "src/entity",
         migrationsDir: "src/migration"

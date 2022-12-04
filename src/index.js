@@ -11,9 +11,8 @@ const PORT = process.env.SERVER_PORT;
 
 app.use(cors({credentials: true, origin: 'http://localhost:3001'}));
 app.use(bodyParser.json());
-app.use('/api',router);
+app.use('/api', router);
 app.use(errors());
-
 
 AppDataSource.initialize().then(()=>{
     console.log("Database connected successfully");

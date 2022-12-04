@@ -4,6 +4,8 @@ const { compare } = require("../helpers/encrypt");
 
 const accessTokenSecret = process.env.JWT_ACCESS_KEY;
 const refreshTokenSecret = process.env.JWT_REFRESH_KEY;
+const accessTokenLifetime = process.env.ACCESS_TOKEN_LIFETIME;
+const refreshTokenLifetime = process.env.REFRESH_TOKEN_LIFETIME;
 
 async function login(data){
     const user = await userService.getUserByEmail(data.email);
@@ -12,8 +14,8 @@ async function login(data){
         throw new Error("Invalid email or password");
     }
 
-    const accessToken = jwt.createToken({ id: user.id }, accessTokenSecret);
-    const refreshToken = jwt.createToken({ id: user.id }, refreshTokenSecret);
+    const accessToken = jwt.createToken({ id: user.id }, accessTokenSecret, accessTokenLifetime);
+    const refreshToken = jwt.createToken({ id: user.id }, refreshTokenSecret, refreshTokenLifetime);
 
     return { accessToken, refreshToken };
 }
@@ -37,8 +39,8 @@ async function refresh(data)
             throw new Error("RefreshToken is not valid");
         }
         
-        const accessToken = jwt.createToken({ id: result.id }, accessTokenSecret);
-        const refreshToken = jwt.createToken({ id: result.id }, refreshTokenSecret);
+        const accessToken = jwt.createToken({ id: result.id }, accessTokenSecret, accessTokenLifetime);
+        const refreshToken = jwt.createToken({ id: result.id }, refreshTokenSecret, refreshTokenLifetime);
 
         return { accessToken, refreshToken };
     }catch{ throw new Error("RefreshToken is not valid"); }

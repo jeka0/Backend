@@ -1,10 +1,10 @@
 const postSevice = require("../services/postService");
 
 async function createPost(req, res){
-    const { message } = req.body;
+    const { message, image } = req.body;
     const userId = req.userId;
 
-    postSevice.createPost({ userId, message })
+    postSevice.createPost( userId, { message, image })
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }
@@ -41,10 +41,10 @@ async function getUserPosts(req, res){
 
 async function updatePost(req, res){
     const { id } = req.params;
-    const { message } = req.body;
+    const { message, image } = req.body;
     const userId = req.userId;
 
-    postSevice.updatePost(id, userId, { message })
+    postSevice.updatePost(id, userId, { message, image })
     .then(()=>res.send("OK"))
     .catch((err)=>res.status(400).send(err.message));
 }
@@ -58,6 +58,14 @@ async function deletePost(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function getRange(req, res){
+    const { page, limit } = req.query;
+
+    postSevice.pagination(page, limit)
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 module.exports = { 
     createPost, 
     getPost, 
@@ -65,5 +73,6 @@ module.exports = {
     getCurrentUserPosts, 
     getUserPosts, 
     updatePost, 
-    deletePost 
+    deletePost,
+    getRange
 };
