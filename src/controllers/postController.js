@@ -66,6 +66,15 @@ async function getRange(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function getUserRange(req, res){
+    const { page, limit } = req.query;
+    const { id } = req.params;
+
+    postSevice.paginationUser(id, page, limit)
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 module.exports = { 
     createPost, 
     getPost, 
@@ -74,5 +83,6 @@ module.exports = {
     getUserPosts, 
     updatePost, 
     deletePost,
-    getRange
+    getRange,
+    getUserRange
 };

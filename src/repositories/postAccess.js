@@ -49,6 +49,26 @@ async function getRange(skip, take){
     const [result, total] = await postRep.findAndCount({ 
         skip,
         take,
+        relations:['user'],
+        order: {id: 'DESC'}
+    });
+
+    return {
+        data: result,
+        total
+    }
+}
+
+async function getUserRange(userId, skip, take){
+    const [result, total] = await postRep.findAndCount({ 
+        skip,
+        take,
+        where:{
+            user:{
+                id:userId
+            }
+        },
+        relations:['user'],
         order: {id: 'DESC'}
     });
 
@@ -65,5 +85,6 @@ module.exports = {
     getUserPosts, 
     updatePost, 
     deletePost,
-    getRange
+    getRange,
+    getUserRange
 };

@@ -81,6 +81,17 @@ async function pagination(page, limit){
     const skip= (page-1) * limit;
     const result = await postAccess.getRange(skip, limit);
 
+    result.data.forEach((post)=>delete post.user.password);
+
+    return result;
+}
+
+async function paginationUser(userId, page, limit){
+    const skip= (page-1) * limit;
+    const result = await postAccess.getUserRange(userId, skip, limit);
+
+    result.data.forEach((post)=>delete post.user.password);
+
     return result;
 }
 
@@ -91,5 +102,6 @@ module.exports = {
     getUserPosts, 
     updatePost, 
     deletePost,
-    pagination
+    pagination,
+    paginationUser
 };
