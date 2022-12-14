@@ -29,8 +29,5 @@
   "devDependencies": {
     "@types/node": "^18.11.9",
     "gh-pages": "^4.0.0"
-  },
-  "publishConfig": {
-    "jeka0:registry": "https://npm.pkg.github.com"
   }
 }
