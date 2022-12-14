@@ -21,7 +21,7 @@ async function getPost(id){
         throw new Error("Post not found");
     }
 
-    delete post.user.password;
+    deleteInfo(post);
 
     return post;
 }
@@ -30,7 +30,7 @@ async function getAllPosts()
 {
     const posts = await postAccess.getAllPosts()
 
-    posts.forEach((post)=>delete post.user.password);
+    posts.forEach(deleteInfo);
 
     return posts;
 }
@@ -38,7 +38,7 @@ async function getAllPosts()
 async function getUserPosts(id){
     const posts = await postAccess.getUserPosts(id)
 
-    posts.forEach((post)=>delete post.user.password);
+    posts.forEach(deleteInfo);
 
     return posts;
 }
@@ -81,7 +81,7 @@ async function pagination(page, limit){
     const skip= (page-1) * limit;
     const result = await postAccess.getRange(skip, limit);
 
-    result.data.forEach((post)=>delete post.user.password);
+    result.data.forEach(deleteInfo);
 
     return result;
 }
@@ -90,7 +90,7 @@ async function paginationUser(userId, page, limit){
     const skip= (page-1) * limit;
     const result = await postAccess.getUserRange(userId, skip, limit);
 
-    result.data.forEach((post)=>delete post.user.password);
+    result.data.forEach(deleteInfo);
 
     return result;
 }
@@ -108,8 +108,30 @@ async function addUserLike(id, userId){
     }
 
     post.likes.push(user);
+    const updatedPost = await postAccess.createPost(post);
+    deleteInfo(updatedPost);
+    return updatedPost;
+}
 
-    postAccess.createPost(post);
+async function deleteUserLike(id, userId){
+    const post = await postAccess.getPost(id);
+
+    if(!post){
+        throw new Error("Post not found");
+    }
+
+    const index = post.likes.findIndex(user=>user.id===userId);
+    if (index > -1) {
+        post.likes.splice(index, 1);
+    }
+    const updatedPost = await postAccess.createPost(post);
+    deleteInfo(updatedPost);
+    return updatedPost;
+}
+
+function deleteInfo(post){
+    delete post.user.password;
+    post.likes.forEach((user, index)=>{post.likes[index] = {id:user.id}})
 }
 
 module.exports = {
@@ -121,5 +143,6 @@ module.exports = {
     deletePost,
     pagination,
     paginationUser,
-    addUserLike
+    addUserLike,
+    deleteUserLike
 };

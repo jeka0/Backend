@@ -80,7 +80,16 @@ async function addUserLike(req, res){
     const userId = req.userId;
 
     postSevice.addUserLike(id, userId)
-    .then(()=>res.send("OK"))
+    .then((result)=>res.send(result))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
+async function deleteUserLike(req, res){
+    const { id } = req.params;
+    const userId = req.userId;
+
+    postSevice.deleteUserLike(id, userId)
+    .then((result)=>res.send(result))
     .catch((err)=>res.status(400).send(err.message));
 }
 
@@ -94,5 +103,6 @@ module.exports = {
     deletePost,
     getRange,
     getUserRange,
-    addUserLike
+    addUserLike,
+    deleteUserLike
 };

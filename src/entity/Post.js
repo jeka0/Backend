@@ -15,8 +15,7 @@ module.exports = new EntitySchema({
             type: "date"
         },
         image: {
-            type: "text",
-            nullable: true
+            type: "text"
         }
     },
     relations: {
