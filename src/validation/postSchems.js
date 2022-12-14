@@ -9,7 +9,7 @@ const id = {
 const create = {
     [Segments.BODY]: Joi.object().keys({
         message: Joi.string(),
-        image: Joi.string()
+        image: Joi.string().required()
     }).required().min(1)
 }
 
