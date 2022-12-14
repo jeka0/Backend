@@ -95,6 +95,23 @@ async function paginationUser(userId, page, limit){
     return result;
 }
 
+async function addUserLike(id, userId){
+    const user = await getUserByID(userId);
+    const post = await postAccess.getPost(id);
+
+    if(!post){
+        throw new Error("Post not found");
+    }
+
+    if(!user){
+        throw new Error("User not found");
+    }
+
+    post.likes.push(user);
+
+    postAccess.createPost(post);
+}
+
 module.exports = {
     createPost, 
     getPost, 
@@ -103,5 +120,6 @@ module.exports = {
     updatePost, 
     deletePost,
     pagination,
-    paginationUser
+    paginationUser,
+    addUserLike
 };

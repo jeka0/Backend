@@ -7,7 +7,7 @@ async function createPost(post){
 
 async function getAllPosts(){
     return await postRep.find({
-         relations:['user'],
+         relations:['user', 'likes'],
          order: {id: 'DESC'}
     });
 }
@@ -17,7 +17,7 @@ async function getPost(id){
         where:{
             id 
         }, 
-        relations:['user'] 
+        relations:['user', 'likes'] 
     });
 }
 
@@ -28,7 +28,7 @@ async function getUserPosts(userId){
                 id:userId
             }
         },
-        relations:['user'],
+        relations:['user', 'likes'],
         order: {id: 'DESC'}
     });
 }
@@ -49,7 +49,7 @@ async function getRange(skip, take){
     const [result, total] = await postRep.findAndCount({ 
         skip,
         take,
-        relations:['user'],
+        relations:['user', 'likes'],
         order: {id: 'DESC'}
     });
 
@@ -68,7 +68,7 @@ async function getUserRange(userId, skip, take){
                 id:userId
             }
         },
-        relations:['user'],
+        relations:['user', 'likes'],
         order: {id: 'DESC'}
     });
 

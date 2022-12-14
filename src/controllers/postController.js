@@ -75,6 +75,15 @@ async function getUserRange(req, res){
     .catch((err)=>res.status(400).send(err.message));
 }
 
+async function addUserLike(req, res){
+    const { id } = req.params;
+    const userId = req.userId;
+
+    postSevice.addUserLike(id, userId)
+    .then(()=>res.send("OK"))
+    .catch((err)=>res.status(400).send(err.message));
+}
+
 module.exports = { 
     createPost, 
     getPost, 
@@ -84,5 +93,6 @@ module.exports = {
     updatePost, 
     deletePost,
     getRange,
-    getUserRange
+    getUserRange,
+    addUserLike
 };

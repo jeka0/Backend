@@ -26,5 +26,11 @@ module.exports = new EntitySchema({
             joinTable: true,
             cascade: true,
         },
+        likes: {
+            target: "User",
+            type: "many-to-many",
+            joinTable: true,
+            cascade: true,
+        },
     },
 })
